@@ -1,0 +1,242 @@
+import React from'react';
+import {Button, Modal, Form} from "semantic-ui-react";
+import DishInput from './DishInput.jsx';
+import DishSelector from '../containers/DishesState.js';
+
+import {toast} from "react-semantic-toasts";
+
+class OrderModal extends React.Component{
+
+    constructor(props) {
+        super(props)
+        this.state ={
+            btn_name: "Button",
+            btn_class: "primary",
+            header: "Header",
+            open: false,
+            id: null,
+            client: "",
+            dishes: [],
+        }
+        this.open = this.open.bind(this)
+        this.close = this.close.bind(this)
+        this.resetDishes = this.resetDishes.bind(this)
+        this.editClient = this.editClient.bind(this)
+        this.editDishCount = this.editDishCount.bind(this)
+        this.dishes = this.dishes.bind(this)
+        this.id = this.id.bind(this)
+        this.client = this.client.bind(this)
+        this.order = this.order.bind(this)
+        this.update = this.update.bind(this)
+        this.create = this.create.bind(this)
+        this.delete = this.delete.bind(this)
+        this._is_valid = this._is_valid.bind(this)
+    }
+
+    componentDidMount() {
+       this.setState({
+          btn_name: this.props.btn_name,
+          btn_class: this.props.btn_class ? this.props.btn_class : this.state.btn_class,
+          header: this.props.header,
+          open: this.props.open,
+          client: this.client(),
+          dishes: this.dishes(),
+       });
+    }
+
+    order = (dishes = this.dishes(), client = this.client()) => {
+        return {
+            id: this.id(),
+            client: client,
+            dishes: dishes
+        }
+    }
+
+    id(){
+        if(this.state.id != null){
+            return this.state.id
+        }else{
+            return this.props.order.id != null ? this.props.order.id : null
+        }
+    }
+
+    client(){
+        return this.state.client.length > 0 ? this.state.client : this.props.order.client;
+    }
+
+    dishes(){
+        return this.state.dishes.length > 0 ? this.state.dishes : this.props.order.dishes;
+    }
+
+    open() {
+        this.setState({open: true});
+    }
+
+    close() {
+        this.setState({open: false, dishes:[], client:'', id:null});
+    }
+
+    create(){
+        let order = this.order();
+        if (this._is_valid(order)) {
+            setTimeout(() => {
+                toast({
+                    type: 'success',
+                    icon: 'bullhorn',
+                    title: 'ORDER ACTION STATUS',
+                    description: 'Created!',
+                    time: 2000,
+                });
+            }, 250);
+            let order_created = this.props.onCreate({client: this.client(), dishes: this.dishes()});
+            this.setState(order_created)
+        }else {
+            setTimeout(() => {
+                toast({
+                    type: 'warning',
+                    icon: 'bullhorn',
+                    title: 'ORDER ACTION STATUS',
+                    description: 'Invalid data!',
+                    time: 2000,
+                });
+            }, 250);
+        }
+    }
+
+    update(){
+        let order = this.order();
+        if (this._is_valid(order)) {
+            setTimeout(() => {
+                toast({
+                    type: 'success',
+                    icon: 'bullhorn',
+                    title: 'ORDER ACTION STATUS',
+                    description: 'Updated!',
+                    time: 2000,
+                });
+            }, 250);
+            let order_updated = this.props.onUpdate(this.order());
+            this.setState(order_updated)
+        }else {
+            setTimeout(() => {
+                toast({
+                    type: 'warning',
+                    icon: 'bullhorn',
+                    title: 'ORDER ACTION STATUS',
+                    description: 'Invalid data!',
+                    time: 2000,
+                });
+            }, 250);
+        }
+    }
+
+    delete(){
+        setTimeout(() => {
+            toast({
+                type: 'success',
+                icon: 'bullhorn',
+                title: 'ORDER ACTION STATUS',
+                description: 'Deleted!',
+                time: 2000,
+            });
+        }, 250);
+        this.props.onDelete(this.id());
+        this.setState({open:true, dishes:[], client:'', id:null});
+    }
+
+    editClient(e){
+        let client_edited = e.target.value;
+        this.setState({client:client_edited})
+    }
+
+    editDishCount(dish_edited){
+        let dishes = this.dishes().map(dish => {
+            if (dish.id === dish_edited.id){
+                dish.items_count = dish_edited.items_count;
+            }
+            return dish
+        });
+        this.setState({dishes:dishes})
+    }
+
+    resetDishes(dishes) {
+        let dishes_props = this.props.order.dishes;
+        dishes.map(dish => {
+            if (dishes_props.length > 0) {
+                dishes_props.map(d =>{
+                    if (d.id === dish.id){
+                        dish.items_count = d.items_count;
+                    }else {
+                        dish.items_count = 1
+                    }
+                    return dish
+                });
+            }else {
+                dish.items_count = 1
+            }
+            return dish
+        });
+        this.setState({dishes: dishes});
+    }
+
+    _is_valid(obj){
+        let is_valid = true;
+        if(obj.hasOwnProperty('client')){
+            if (obj.client.length === 0){
+                is_valid = false;
+            }
+        }
+
+        if(obj.hasOwnProperty('dishes')){
+            if (obj.dishes.length === 0){
+                is_valid = false;
+            }
+        }
+        return is_valid;
+    }
+
+    render() {
+        return (
+            <div id="action_area">
+                <Button className={this.state.btn_class} onClick={this.open}>
+                    {this.state.btn_name}
+                </Button>
+                <Modal open={this.state.open} onClose={this.close}>
+                    <Modal.Header>
+                        {this.state.header}{this.id()}
+                    </Modal.Header>
+                    <Modal.Content>
+                        <Form>
+                            <Form.Field width={4}>
+                                <label>Client</label>
+                                <input defaultValue={this.client()} size={25} onChange={this.editClient}/>
+                            </Form.Field>
+                            <Form.Field>
+                                <label>Dishes Ordered:</label>
+                            </Form.Field>
+                            <ul>
+                                {
+                                    this.dishes().map((dish) => {
+                                        return <DishInput key={dish.id} dish={dish} edit_dish={this.editDishCount} />
+                                    })
+                                }
+                            </ul>
+                            <DishSelector
+                                selected_dishes={this.dishes()}
+                                reset_dishes={this.resetDishes}
+                            />
+                        </Form>
+                    </Modal.Content>
+                    <Modal.Actions>
+                        <Button onClick={this.close}>Close</Button>
+                        <Button positive onClick={this.id() != null ? this.update : this.create}>Save</Button>
+                        {this.id() !== null ? <Button negative onClick={this.delete}>Delete</Button> : ''}
+                    </Modal.Actions>
+                </Modal>
+            </div>
+        );
+    }
+
+};
+
+export default OrderModal;

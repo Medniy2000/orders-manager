@@ -1,0 +1,38 @@
+[
+  {
+    "id":1,
+    "name": "Млинці з маком",
+    "items_count": 9999,
+    "price_per_item": 35
+  },
+  {
+    "id":2,
+    "name": "Чай Чорний",
+    "items_count": 9999,
+    "price_per_item": 8
+  },
+  {
+  "id":3,
+  "name": "Картопля по селянськи",
+  "items_count": 9999,
+  "price_per_item": 48
+  },
+  {
+    "id":4,
+    "name": "Bud Безалкогольне пиво",
+    "items_count": 9999,
+    "price_per_item": 26
+  },
+  {
+    "id":5,
+    "name": "Плов Казахстанський",
+    "items_count": 9999,
+    "price_per_item": 37
+  },
+  {
+    "id":6,
+    "name": "Чай Зелений",
+    "items_count": 9999,
+    "price_per_item": 9
+  }
+]
