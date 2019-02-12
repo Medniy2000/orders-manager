@@ -1,7 +1,8 @@
-import React from'react';
-import {Form} from "semantic-ui-react";
+import React from'react'
+import {Form} from "semantic-ui-react"
 import { Dropdown } from 'semantic-ui-react'
 
+import {map, forEach} from 'lodash/collection'
 
 class DishSelector extends React.Component{
 
@@ -15,37 +16,36 @@ class DishSelector extends React.Component{
     }
 
     onChange(e, data){
-        let dishes = [];
-        this.state.dishes.forEach(dish => {
+        let dishes = []
+        forEach(this.state.dishes, (dish) => {
             data.value.forEach(val => {
                 if (val === dish.id){
-                    dishes.push(dish);
+                    dishes.push(dish)
                 }
             })
-        });
-        this.props.reset_dishes(dishes);
+        })
+        this.props.reset_dishes(dishes)
     }
 
     ordered_dishes(dishes =  this.props.selected_dishes){
-        return dishes.map( dish => {
+        return map(dishes, (dish) => {
                 return dish.id
-            });
+            })
     }
 
     componentDidMount() {
-        let options = [];
-        this.state.dishes.forEach(dish => {
-            options.push({
+        let options = map(this.state.dishes, (dish) => {
+            return{
                 key: dish.id,
                 text: dish.name,
                 value: dish.id,
-            });
-        });
+            }
+        })
         this.setState(
             {
                 options: options,
             }
-        );
+        )
     }
 
     render() {
@@ -61,9 +61,9 @@ class DishSelector extends React.Component{
                     />
                 </Form.Field>
             </div>
-        );
+        )
     }
 
-};
+}
 
-export default DishSelector;
+export default DishSelector

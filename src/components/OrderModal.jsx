@@ -1,9 +1,10 @@
-import React from'react';
-import {Button, Modal, Form} from "semantic-ui-react";
-import DishInput from './DishInput.jsx';
-import DishSelector from '../containers/DishesState.js';
+import React from'react'
+import {Button, Modal, Form} from "semantic-ui-react"
+import DishInput from './DishInput.jsx'
+import DishSelector from '../containers/DishesState.js'
 
-import {toast} from "react-semantic-toasts";
+import {toast} from "react-semantic-toasts"
+import {map} from 'lodash/collection'
 
 class OrderModal extends React.Component{
 
@@ -30,7 +31,7 @@ class OrderModal extends React.Component{
         this.update = this.update.bind(this)
         this.create = this.create.bind(this)
         this.delete = this.delete.bind(this)
-        this._is_valid = this._is_valid.bind(this)
+        this.isValid = this.isValid.bind(this)
     }
 
     componentDidMount() {
@@ -41,7 +42,7 @@ class OrderModal extends React.Component{
           open: this.props.open,
           client: this.client(),
           dishes: this.dishes(),
-       });
+       })
     }
 
     order = (dishes = this.dishes(), client = this.client()) => {
@@ -61,24 +62,24 @@ class OrderModal extends React.Component{
     }
 
     client(){
-        return this.state.client.length > 0 ? this.state.client : this.props.order.client;
+        return this.state.client.length > 0 ? this.state.client : this.props.order.client
     }
 
     dishes(){
-        return this.state.dishes.length > 0 ? this.state.dishes : this.props.order.dishes;
+        return this.state.dishes.length > 0 ? this.state.dishes : this.props.order.dishes
     }
 
     open() {
-        this.setState({open: true});
+        this.setState({open: true})
     }
 
     close() {
-        this.setState({open: false, dishes:[], client:'', id:null});
+        this.setState({open: false, dishes:[], client:'', id:null})
     }
 
     create(){
-        let order = this.order();
-        if (this._is_valid(order)) {
+        let order = this.order()
+        if (this.isValid(order)) {
             setTimeout(() => {
                 toast({
                     type: 'success',
@@ -86,9 +87,9 @@ class OrderModal extends React.Component{
                     title: 'ORDER ACTION STATUS',
                     description: 'Created!',
                     time: 2000,
-                });
-            }, 250);
-            let order_created = this.props.onCreate({client: this.client(), dishes: this.dishes()});
+                })
+            }, 250)
+            let order_created = this.props.onCreate({client: this.client(), dishes: this.dishes()})
             this.setState(order_created)
         }else {
             setTimeout(() => {
@@ -98,14 +99,14 @@ class OrderModal extends React.Component{
                     title: 'ORDER ACTION STATUS',
                     description: 'Invalid data!',
                     time: 2000,
-                });
-            }, 250);
+                })
+            }, 250)
         }
     }
 
     update(){
-        let order = this.order();
-        if (this._is_valid(order)) {
+        let order = this.order()
+        if (this.isValid(order)) {
             setTimeout(() => {
                 toast({
                     type: 'success',
@@ -113,9 +114,9 @@ class OrderModal extends React.Component{
                     title: 'ORDER ACTION STATUS',
                     description: 'Updated!',
                     time: 2000,
-                });
-            }, 250);
-            let order_updated = this.props.onUpdate(this.order());
+                })
+            }, 250)
+            let order_updated = this.props.onUpdate(this.order())
             this.setState(order_updated)
         }else {
             setTimeout(() => {
@@ -125,8 +126,8 @@ class OrderModal extends React.Component{
                     title: 'ORDER ACTION STATUS',
                     description: 'Invalid data!',
                     time: 2000,
-                });
-            }, 250);
+                })
+            }, 250)
         }
     }
 
@@ -138,61 +139,61 @@ class OrderModal extends React.Component{
                 title: 'ORDER ACTION STATUS',
                 description: 'Deleted!',
                 time: 2000,
-            });
-        }, 250);
-        this.props.onDelete(this.id());
-        this.setState({open:true, dishes:[], client:'', id:null});
+            })
+        }, 250)
+        this.props.onDelete(this.id())
+        this.setState({open:true, dishes:[], client:'', id:null})
     }
 
     editClient(e){
-        let client_edited = e.target.value;
+        let client_edited = e.target.value
         this.setState({client:client_edited})
     }
 
     editDishCount(dish_edited){
-        let dishes = this.dishes().map(dish => {
+        let dishes = map(this.dishes(), (dish) => {
             if (dish.id === dish_edited.id){
-                dish.items_count = dish_edited.items_count;
+                dish.items_count = dish_edited.items_count
             }
             return dish
-        });
+        })
         this.setState({dishes:dishes})
     }
 
     resetDishes(dishes) {
-        let dishes_props = this.props.order.dishes;
-        dishes.map(dish => {
+        let dishes_props = this.props.order.dishes
+        map(dishes, (dish) => {
             if (dishes_props.length > 0) {
                 dishes_props.map(d =>{
                     if (d.id === dish.id){
-                        dish.items_count = d.items_count;
+                        dish.items_count = d.items_count
                     }else {
                         dish.items_count = 1
                     }
                     return dish
-                });
+                })
             }else {
                 dish.items_count = 1
             }
             return dish
-        });
-        this.setState({dishes: dishes});
+        })
+        this.setState({dishes: dishes})
     }
 
-    _is_valid(obj){
-        let is_valid = true;
+    isValid(obj){
+        let is_valid = true
         if(obj.hasOwnProperty('client')){
             if (obj.client.length === 0){
-                is_valid = false;
+                is_valid = false
             }
         }
 
         if(obj.hasOwnProperty('dishes')){
             if (obj.dishes.length === 0){
-                is_valid = false;
+                is_valid = false
             }
         }
-        return is_valid;
+        return is_valid
     }
 
     render() {
@@ -234,9 +235,9 @@ class OrderModal extends React.Component{
                     </Modal.Actions>
                 </Modal>
             </div>
-        );
+        )
     }
 
-};
+}
 
-export default OrderModal;
+export default OrderModal

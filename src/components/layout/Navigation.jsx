@@ -1,7 +1,7 @@
-import React from'react';
+import React from'react'
 
-import {Link} from "react-router-dom";
-import {logout, authorizedUser} from "../../helpers/AuthUserHelper.js";
+import {Link} from "react-router-dom"
+import {logout, authorizedUser} from "../../helpers/AuthUserHelper.js"
 
 class Navigation extends React.Component{
 
@@ -16,7 +16,7 @@ class Navigation extends React.Component{
 
     auth_item_menu(){
       if (authorizedUser()){
-          return <Link to='/login' onClick={logout}><i className="sign out alternate icon"></i>{this.state.user}</Link>;
+          return <Link to='/login' onClick={logout}><i className="sign out alternate icon"></i>{this.state.user}</Link>
       }
       return <Link to='/login'><i className="sign in alternate icon"></i>Log In</Link>
     }
@@ -33,9 +33,9 @@ class Navigation extends React.Component{
                     </div>
                 </div>
             </div>
-        );
+        )
     }
 
-};
+}
 
-export default Navigation;
+export default Navigation

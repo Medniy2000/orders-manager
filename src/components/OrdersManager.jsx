@@ -1,28 +1,25 @@
-import React from'react';
-import {SemanticToastContainer} from "react-semantic-toasts";
+import React from'react'
+import {SemanticToastContainer} from "react-semantic-toasts"
+import {reduce} from 'lodash/collection'
 
-import Navigation from './layout/Navigation.jsx';
-import Container from './layout/Container.jsx';
-import Content from './layout/Content.jsx';
-import Footer from './layout/Footer.jsx';
+import Navigation from './layout/Navigation.jsx'
+import Container from './layout/Container.jsx'
+import Content from './layout/Content.jsx'
+import Footer from './layout/Footer.jsx'
 
 
-import OrderList from '../containers/OrderList.js';
-import Waiter from '../containers/Waiter.js';
+import OrderList from '../containers/OrderList.js'
+import Waiter from '../containers/Waiter.js'
 
 
 export default ({orders}) =>{
 
     function profit(orders){
-        let profit = 0;
-        orders.forEach(order => {
-            let order_profit = 0;
-            order.dishes.forEach(dish => {
-                order_profit += dish.items_count * dish.price_per_item;
-            });
-            profit += order_profit;
-        });
-        return profit;
+        return reduce(orders, function(profit, order) {
+            return profit + reduce(order.dishes, function (order_profit, dish) {
+                return order_profit + dish.items_count * dish.price_per_item
+            }, 0)
+        }, 0)
     }
 
     return (

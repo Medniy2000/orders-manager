@@ -1,4 +1,4 @@
-import React from'react';
+import React from'react'
 
 
 class Container extends React.Component{
@@ -8,8 +8,8 @@ class Container extends React.Component{
             <div className="pusher">
                 {this.props.children}
             </div>
-        );
+        )
     }
-};
+}
 
-export default Container;
+export default Container

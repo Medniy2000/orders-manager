@@ -1,43 +1,50 @@
-import React from'react';
+import React from'react'
 
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
-import {SemanticToastContainer, toast} from "react-semantic-toasts";
+import {SemanticToastContainer, toast} from "react-semantic-toasts"
+import {find} from 'lodash/collection'
 
-import Container from "./layout/Container.jsx";
-import Content from "./layout/Content.jsx";
-import {setCookie} from "../helpers/CookiesHelper";
+import Container from "./layout/Container.jsx"
+import Content from "./layout/Content.jsx"
+import {setCookie} from "../helpers/CookiesHelper"
 
 
 class Register extends React.Component{
-
-    getInitialState(){
-        return {
+    constructor(props) {
+        super(props)
+        this.state ={
             username: '',
             email: '',
             password: ''
-        };
+        }
+        this.typedUser = this.typedUser.bind(this)
+        this.typedPassword = this.typedPassword.bind(this)
+        this.typedEmail = this.typedEmail.bind(this)
+        this.createNewAccount = this.createNewAccount.bind(this)
+        this.isValid = this.isValid.bind(this)
+
     }
 
     typedUser(e){
-        let user = e.target.value;
+        let user = e.target.value
         this.setState({username: user})
     }
 
     typedPassword(e){
-        let password = e.target.value;
+        let password = e.target.value
         this.setState({password: password})
     }
 
     typedEmail(e){
-        let email = e.target.value;
+        let email = e.target.value
         this.setState({email: email})
     }
 
     createNewAccount(){
-      if (this.is_valid()){
-          let user = this.state;
-          this.props.onCreate(user);
-          setCookie('currentUser', this.state.username, {expires: 60 * 15});
+      if (this.isValid()){
+          let user = this.state
+          this.props.onCreate(user)
+          setCookie('currentUser', this.state.username, {expires: 60 * 15})
           setTimeout(() => {
               toast({
                   type: 'success',
@@ -46,10 +53,10 @@ class Register extends React.Component{
                   description: 'Register Success!',
                   time: 2000,
                   onClose: () => {
-                      return this.props.history.push('/');
+                      return this.props.history.push('/')
                   }
-              });
-          }, 250);
+              })
+          }, 250)
       }else {
           setTimeout(() => {
               toast({
@@ -58,30 +65,22 @@ class Register extends React.Component{
                   title: 'REGISTER STATUS',
                   description: 'Register Failed! Please check typed data',
                   time: 2000,
-              });
-          }, 250);
+              })
+          }, 250)
       }
     }
 
-    is_valid(){
-        let is_valid = true;
-        let typed_user = this.state;
-        let users_local = this.props.users;
+    isValid(){
+        let typed_user = this.state
+        let users_local = this.props.users
 
         if (typed_user.password.length <=3){
-            is_valid = false;
-            return is_valid
+            return false
         }
-
-        if (users_local){
-            users_local.forEach(user =>{
-                if (typed_user.email === user.email) {
-                    is_valid = false;
-                    return is_valid;
-                }
-            })
-        }
-        return is_valid;
+        let user_with_same_email = find(users_local, function (o) {
+            return typed_user.email === o.email
+        })
+        return user_with_same_email === undefined
     }
 
     render() {
@@ -129,9 +128,9 @@ class Register extends React.Component{
                     </Content>
                 </Container>
             </div>
-        );
+        )
     }
 
-};
+}
 
-export default Register;
+export default Register

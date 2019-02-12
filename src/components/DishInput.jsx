@@ -1,5 +1,5 @@
-import React from'react';
-import {Form} from "semantic-ui-react";
+import React from'react'
+import {Form} from "semantic-ui-react"
 
 
 class DishInput extends React.Component{
@@ -20,11 +20,11 @@ class DishInput extends React.Component{
     }
 
     changeCount(e){
-        const count = e.target.value;
+        const count = e.target.value
         this.props.edit_dish({
             id: this.props.dish.id,
             items_count: parseInt(count)
-        });
+        })
     }
 
     render() {
@@ -41,9 +41,9 @@ class DishInput extends React.Component{
                     </Form.Field>
                 </div>
             </li>
-        );
+        )
     }
 
-};
+}
 
-export default DishInput;
+export default DishInput

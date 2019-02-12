@@ -1,41 +1,39 @@
-import React from'react';
+import React from'react'
 
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
-import { SemanticToastContainer, toast } from 'react-semantic-toasts';
-
-import Container from "./layout/Container.jsx";
-import Content from "./layout/Content.jsx";
+import { SemanticToastContainer, toast } from 'react-semantic-toasts'
+import {find} from 'lodash/collection'
+import Container from "./layout/Container.jsx"
+import Content from "./layout/Content.jsx"
 import {setCookie} from '../helpers/CookiesHelper.js'
 
 
 class Login extends React.Component{
     constructor(props) {
         super(props)
+        this.state = {
+            username: '',
+            password: ''
+        }
         this.typedUser = this.typedUser.bind(this)
         this.typedPassword = this.typedPassword.bind(this)
         this.login = this.login.bind(this)
-    }
-
-    getInitialState(){
-        return {
-            username: '',
-            password: ''
-        };
+        this.isValid = this.isValid.bind(this)
     }
 
     typedUser(e){
-        let user = e.target.value;
+        let user = e.target.value
         this.setState({username: user})
     }
 
     typedPassword(e){
-        let password = e.target.value;
+        let password = e.target.value
         this.setState({password: password})
     }
 
     login(){
-        if (this.is_valid()){
-            setCookie('currentUser', this.state.username, {expires: 60 * 15});
+        if (this.isValid()){
+            setCookie('currentUser', this.state.username, {expires: 60 * 15})
             setTimeout(() => {
                 toast({
                     type: 'success',
@@ -46,8 +44,8 @@ class Login extends React.Component{
                     onClose: () => {
                         return this.props.history.push('/')
                     }
-                });
-            }, 250);
+                })
+            }, 250)
         }else {
             setTimeout(() => {
                 toast({
@@ -56,27 +54,21 @@ class Login extends React.Component{
                     title: 'LOGIN STATUS',
                     description: 'Login Failed! Please check typed data',
                     time: 2000,
-                });
-            }, 250);
+                })
+            }, 250)
         }
     }
 
-    is_valid(){
-        let is_valid = false;
-        let typed_user = this.state;
-        let users = this.props.users;
-        if (users){
-           users.forEach(user =>{
-               if (
-                   (typed_user.username === user.username ||
-                   typed_user.email === user.email) &&
-                   typed_user.password === user.password) {
-                   is_valid = true;
-                   return is_valid;
-               }
-           })
-        }
-        return is_valid;
+    isValid(){
+        let typed_user = this.state
+        let users = this.props.users
+        let finded_user = find(users, function (o) {
+            return (
+                typed_user.username === o.username ||
+                typed_user.email === o.email
+                ) && typed_user.password === o.password
+        })
+        return finded_user !== undefined
     }
 
     render(){
@@ -114,9 +106,9 @@ class Login extends React.Component{
                     </Content>
                 </Container>
             </div>
-        );
+        )
     }
 
-};
+}
 
-export default Login;
+export default Login

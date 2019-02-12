@@ -1,16 +1,17 @@
-import React from 'react';
+import React from 'react'
 import Dish from './Dish.jsx'
+import {map} from 'lodash/collection'
 
 export default ({dishes}) => {
     return (
         <ul>
             {
-                dishes.map(dish => {
+                map(dishes, (dish) => {
                     return (
                         <Dish dish={dish} key={dish.id}/>
-                    );
+                    )
                 })
             }
         </ul>
-    );
+    )
 }

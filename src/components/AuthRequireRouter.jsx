@@ -1,8 +1,8 @@
-import React from 'react';
+import React from 'react'
 import {Route, Redirect} from 'react-router-dom'
 
 export default ({component: Component, is_authenticated, rest}) => {
-    let authenticated = is_authenticated();
+    let authenticated = is_authenticated()
     return (
         <Route
             {...rest}

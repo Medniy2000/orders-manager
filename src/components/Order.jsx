@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
+import {reduce} from 'lodash/collection'
 import DishList from './DishList.jsx'
 import Waiter from '../containers/Waiter.js'
 
 
 export default ({ order: {id, client, dishes}}) => {
+
     function totalPrice(dishes){
-        let total_price = 0;
-        dishes.forEach((dish) => {
-            total_price += dish.price_per_item * dish.items_count;
-        });
-        return total_price;
+        return reduce(dishes, function(profit, dish) {
+                return profit +  dish.items_count * dish.price_per_item
+            }, 0)
     }
 
     return (
@@ -28,5 +28,5 @@ export default ({ order: {id, client, dishes}}) => {
                 />
             </td>
         </tr>
-    );
-};
+    )
+}

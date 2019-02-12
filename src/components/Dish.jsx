@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 
 export default ({ dish: {id, name, price_per_item, items_count}}) => {
@@ -8,5 +8,5 @@ export default ({ dish: {id, name, price_per_item, items_count}}) => {
             <span>{name} {items_count} x {price_per_item}</span>
         </div>
         </li>
-    );
-};
+    )
+}

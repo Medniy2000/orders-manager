@@ -1,8 +1,8 @@
-import uuidv4 from 'uuid/v4';
+import uuidv4 from 'uuid/v4'
 import {
     ADD_ORDER,  ADD_USER,
     DELETE_ORDER, UPDATE_ORDER
-} from "../constants/ActionTypes";
+} from "../constants/ActionTypes"
 
 export const createOrder = ({ client, dishes }) => ({
     type: ADD_ORDER,
@@ -11,7 +11,7 @@ export const createOrder = ({ client, dishes }) => ({
         client,
         dishes
     }
-});
+})
 
 export const updateOrder = ({ id, client, dishes }) => ({
     type: UPDATE_ORDER,
@@ -20,14 +20,14 @@ export const updateOrder = ({ id, client, dishes }) => ({
         client,
         dishes
     }
-});
+})
 
 export const deleteOrder = id => ({
     type: DELETE_ORDER,
     payload: {
         id
     }
-});
+})
 
 
 export const createUser = ({ username, password }) => ({
@@ -37,4 +37,4 @@ export const createUser = ({ username, password }) => ({
         username,
         password
     }
-});
+})

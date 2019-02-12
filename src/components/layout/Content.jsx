@@ -1,4 +1,4 @@
-import React from'react';
+import React from'react'
 
 class Content extends React.Component{
     render() {
@@ -8,8 +8,8 @@ class Content extends React.Component{
                     {this.props.children}
                 </div>
             </div>
-        );
+        )
     }
-};
+}
 
-export default Content;
+export default Content
