@@ -7,7 +7,8 @@ import {
 export const createOrder = ({ client, dishes }) => ({
     type: ADD_ORDER,
     payload: {
-        id: 0,
+        id: uuidv4(),
+        created_at: new Date().toLocaleString('uk-UA'),
         client,
         dishes
     }
@@ -17,6 +18,7 @@ export const updateOrder = ({ id, client, dishes }) => ({
     type: UPDATE_ORDER,
     payload: {
         id,
+        created_at: new Date().toLocaleString('uk-UA'),
         client,
         dishes
     }

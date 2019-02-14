@@ -3,7 +3,6 @@ import {Button, Modal, Form} from "semantic-ui-react"
 import DishInput from './DishInput.jsx'
 import DishSelector from '../containers/DishesState.js'
 
-import {toast} from "react-semantic-toasts"
 import {map} from 'lodash/collection'
 
 class OrderModal extends React.Component{
@@ -80,67 +79,77 @@ class OrderModal extends React.Component{
     create(){
         let order = this.order()
         if (this.isValid(order)) {
-            setTimeout(() => {
-                toast({
-                    type: 'success',
-                    icon: 'bullhorn',
-                    title: 'ORDER ACTION STATUS',
-                    description: 'Created!',
-                    time: 2000,
-                })
-            }, 250)
+            this.props.showNotification(
+                {
+                    "type": "success",
+                    "title": "ORDER ACTION STATUS",
+                    "message": "Created!!",
+                    "icon": "bullhorn",
+                    "time": 2000,
+                    "timeout": 250,
+                    "onClose": ''
+                }
+            )
             let order_created = this.props.onCreate({client: this.client(), dishes: this.dishes()})
             this.setState(order_created)
         }else {
-            setTimeout(() => {
-                toast({
-                    type: 'warning',
-                    icon: 'bullhorn',
-                    title: 'ORDER ACTION STATUS',
-                    description: 'Invalid data!',
-                    time: 2000,
-                })
-            }, 250)
+            this.props.showNotification(
+                {
+                    "type": "warning",
+                    "title": "ORDER ACTION STATUS",
+                    "message": "Invalid data!",
+                    "icon": "bullhorn",
+                    "time": 2000,
+                    "timeout": 250,
+                    "onClose": ''
+                }
+            )
         }
     }
 
     update(){
         let order = this.order()
         if (this.isValid(order)) {
-            setTimeout(() => {
-                toast({
-                    type: 'success',
-                    icon: 'bullhorn',
-                    title: 'ORDER ACTION STATUS',
-                    description: 'Updated!',
-                    time: 2000,
-                })
-            }, 250)
+            this.props.showNotification(
+                {
+                    "type": "success",
+                    "title": "ORDER ACTION STATUS",
+                    "message": "Updated!",
+                    "icon": "bullhorn",
+                    "time": 2000,
+                    "timeout": 250,
+                    "onClose": ''
+                }
+            )
             let order_updated = this.props.onUpdate(this.order())
             this.setState(order_updated)
         }else {
-            setTimeout(() => {
-                toast({
-                    type: 'warning',
-                    icon: 'bullhorn',
-                    title: 'ORDER ACTION STATUS',
-                    description: 'Invalid data!',
-                    time: 2000,
-                })
-            }, 250)
+            this.props.showNotification(
+                {
+                    "type": "warning",
+                    "title": "ORDER ACTION STATUS",
+                    "message": "Invalid data!",
+                    "icon": "bullhorn",
+                    "time": 2000,
+                    "timeout": 250,
+                    "onClose": ''
+                }
+            )
         }
     }
 
     delete(){
-        setTimeout(() => {
-            toast({
-                type: 'success',
-                icon: 'bullhorn',
-                title: 'ORDER ACTION STATUS',
-                description: 'Deleted!',
-                time: 2000,
-            })
-        }, 250)
+        this.props.showNotification(
+            {
+                "type": "warning",
+                "title": "ORDER ACTION STATUS",
+                "message": "Deleted!",
+                "icon": "bullhorn",
+                "time": 2000,
+                "timeout": 250,
+                "onClose": ''
+            }
+        )
         this.props.onDelete(this.id())
         this.setState({open:true, dishes:[], client:'', id:null})
     }

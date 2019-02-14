@@ -1,11 +1,12 @@
 import React from'react'
 
 import { Button, Form, Grid, Header, Segment } from 'semantic-ui-react'
-import {SemanticToastContainer, toast} from "react-semantic-toasts"
+import {SemanticToastContainer} from "react-semantic-toasts"
 import {find} from 'lodash/collection'
 
 import Container from "./layout/Container.jsx"
 import Content from "./layout/Content.jsx"
+
 import {setCookie} from "../helpers/CookiesHelper"
 
 
@@ -41,32 +42,34 @@ class Register extends React.Component{
     }
 
     createNewAccount(){
+
       if (this.isValid()){
           let user = this.state
           this.props.onCreate(user)
           setCookie('currentUser', this.state.username, {expires: 60 * 15})
-          setTimeout(() => {
-              toast({
-                  type: 'success',
-                  icon: 'bullhorn',
-                  title: 'REGISTER STATUS',
-                  description: 'Register Success!',
-                  time: 2000,
-                  onClose: () => {
-                      return this.props.history.push('/')
-                  }
-              })
-          }, 250)
+          this.props.showNotification(
+              {
+                  "type": "success",
+                  "title": "REGISTER STATUS",
+                  "message": "Register Success!",
+                  "icon": "bullhorn",
+                  "time": 2000,
+                  "timeout": 250,
+                  "onClose": this.props.history.push('/')
+              }
+          )
       }else {
-          setTimeout(() => {
-              toast({
-                  type: 'warning',
-                  icon: 'bullhorn',
-                  title: 'REGISTER STATUS',
-                  description: 'Register Failed! Please check typed data',
-                  time: 2000,
-              })
-          }, 250)
+          this.props.showNotification(
+              {
+                  "type": "warning",
+                  "title": "REGISTER STATUS",
+                  "message": "Register Failed! Please check typed data",
+                  "icon": "bullhorn",
+                  "time": 2000,
+                  "timeout": 250,
+                  "onClose": ''
+              }
+          )
       }
     }
 

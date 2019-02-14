@@ -3,8 +3,7 @@ import {reduce} from 'lodash/collection'
 import DishList from './DishList.jsx'
 import Waiter from '../containers/Waiter.js'
 
-
-export default ({ order: {id, client, dishes}}) => {
+export default ({ order: {id, created_at, client, dishes}}) => {
 
     function totalPrice(dishes){
         return reduce(dishes, function(profit, dish) {
@@ -14,7 +13,7 @@ export default ({ order: {id, client, dishes}}) => {
 
     return (
         <tr>
-            <td>{id}</td>
+            <td>{created_at}</td>
             <td>{client}</td>
             <td><DishList dishes={dishes}/></td>
             <td>{totalPrice(dishes)}</td>

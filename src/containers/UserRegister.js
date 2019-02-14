@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import {createUser} from '../actions'
 import Register from '../components/Register.jsx'
+import Notification from "../components/Notification.js"
 
 
 const mapStateToProps = state => {
@@ -15,6 +16,11 @@ const mapDispatchToProps = dispatch => {
             let created = dispatch(createUser(user))
             return created.payload
         },
+
+        showNotification: (notification) => {
+            return dispatch(Notification(notification))
+
+        }
 
     }
 }

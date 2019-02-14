@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import {createOrder, deleteOrder, updateOrder} from '../actions'
 import OrderModal from '../components/OrderModal.jsx'
+import Notification from "../components/Notification"
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -14,6 +15,10 @@ const mapDispatchToProps = dispatch => {
         },
         onDelete: id => {
             dispatch(deleteOrder(id))
+        },
+        showNotification: (notification) => {
+            return dispatch(Notification(notification))
+
         }
     }
 }

@@ -33,7 +33,7 @@ export default ({orders}) =>{
                         <table className="ui selectable inverted table">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <th>Date</th>
                                 <th>Client</th>
                                 <th>Dishes</th>
                                 <th>Total Price</th>

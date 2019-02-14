@@ -1,7 +1,7 @@
 import React from'react'
 
 import { Button, Form, Grid, Header, Message, Segment } from 'semantic-ui-react'
-import { SemanticToastContainer, toast } from 'react-semantic-toasts'
+import { SemanticToastContainer } from 'react-semantic-toasts'
 import {find} from 'lodash/collection'
 import Container from "./layout/Container.jsx"
 import Content from "./layout/Content.jsx"
@@ -34,28 +34,29 @@ class Login extends React.Component{
     login(){
         if (this.isValid()){
             setCookie('currentUser', this.state.username, {expires: 60 * 15})
-            setTimeout(() => {
-                toast({
-                    type: 'success',
-                    icon: 'bullhorn',
-                    title: 'LOGIN STATUS',
-                    description: 'Login Success!',
-                    time: 2000,
-                    onClose: () => {
-                        return this.props.history.push('/')
-                    }
-                })
-            }, 250)
+            this.props.showNotification(
+                {
+                    "type": "success",
+                    "title": "LOGIN STATUS",
+                    "message": "Login Success!",
+                    "icon": "bullhorn",
+                    "time": 2000,
+                    "timeout": 250,
+                    "onClose": this.props.history.push('/')
+                }
+            )
         }else {
-            setTimeout(() => {
-                toast({
-                    type: 'warning',
-                    icon: 'bullhorn',
-                    title: 'LOGIN STATUS',
-                    description: 'Login Failed! Please check typed data',
-                    time: 2000,
-                })
-            }, 250)
+            this.props.showNotification(
+                {
+                    "type": "warning",
+                    "title": "LOGIN STATUS",
+                    "message": "Login Failed! Please check typed data",
+                    "icon": "bullhorn",
+                    "time": 2000,
+                    "timeout": 250,
+                    "onClose": ''
+                }
+            )
         }
     }
 
