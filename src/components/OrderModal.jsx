@@ -87,7 +87,7 @@ class OrderModal extends React.Component{
                     "icon": "bullhorn",
                     "time": 2000,
                     "timeout": 250,
-                    "onClose": ''
+                    "onClose": null
                 }
             )
             let order_created = this.props.onCreate({client: this.client(), dishes: this.dishes()})
@@ -101,7 +101,7 @@ class OrderModal extends React.Component{
                     "icon": "bullhorn",
                     "time": 2000,
                     "timeout": 250,
-                    "onClose": ''
+                    "onClose": null
                 }
             )
         }
@@ -118,7 +118,7 @@ class OrderModal extends React.Component{
                     "icon": "bullhorn",
                     "time": 2000,
                     "timeout": 250,
-                    "onClose": ''
+                    "onClose": null
                 }
             )
             let order_updated = this.props.onUpdate(this.order())
@@ -132,7 +132,7 @@ class OrderModal extends React.Component{
                     "icon": "bullhorn",
                     "time": 2000,
                     "timeout": 250,
-                    "onClose": ''
+                    "onClose": null
                 }
             )
         }
@@ -147,7 +147,7 @@ class OrderModal extends React.Component{
                 "icon": "bullhorn",
                 "time": 2000,
                 "timeout": 250,
-                "onClose": ''
+                "onClose": null
             }
         )
         this.props.onDelete(this.id())

@@ -55,7 +55,7 @@ class Register extends React.Component{
                   "icon": "bullhorn",
                   "time": 2000,
                   "timeout": 250,
-                  "onClose": this.props.history.push('/')
+                  "onClose": function() { this.props.history.push('/') }.bind(this)
               }
           )
       }else {

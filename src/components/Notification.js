@@ -1,7 +1,7 @@
 import {toast} from "react-semantic-toasts"
 
 
-export default ({type, title, message, icon, time, timeout, onClose=''}) => {
+export default ({type, title, message, icon, time, timeout, onClose}) => {
     return () => {
         setTimeout(() => {
             toast({
@@ -11,10 +11,9 @@ export default ({type, title, message, icon, time, timeout, onClose=''}) => {
                 description: message,
                 time: time,
                 onClose: () => {
-                    return onClose
+                    return onClose && onClose()
                 }
             })
         }, timeout)
-
     }
 }
