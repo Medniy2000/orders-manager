@@ -28,9 +28,7 @@ class DishSelector extends React.Component{
     }
 
     ordered_dishes(dishes =  this.props.selected_dishes){
-        return map(dishes, (dish) => {
-                return dish.id
-            })
+        return map(dishes, 'id')
     }
 
     componentDidMount() {

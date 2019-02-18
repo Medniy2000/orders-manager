@@ -226,7 +226,7 @@ class OrderModal extends React.Component{
                             </Form.Field>
                             <ul>
                                 {
-                                    this.dishes().map((dish) => {
+                                    map(this.dishes(), (dish) => {
                                         return <DishInput key={dish.id} dish={dish} edit_dish={this.editDishCount} />
                                     })
                                 }

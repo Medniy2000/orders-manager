@@ -1,19 +1,15 @@
-import users from '../prepared_data/users.json'
 import {ADD_USER} from "../constants/ActionTypes"
 
+import prepared_users from '../prepared_data/users.json'
 
-export default function users_reducer(state = [], action) {
+const INITIAL_STATE = localStorage.getItem('app_data') ? JSON.parse(localStorage.getItem('app_data')).users : prepared_users
+
+export default function users_reducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case ADD_USER:
             state = [...state, action.payload]
-            localStorage.setItem('users', JSON.stringify(state))
             return state
         default:
-            state = JSON.parse(localStorage.getItem('users'))
-            if (!state) {
-                localStorage.setItem('users', JSON.stringify(users))
-                state = users
-            }
             return state
     }
 }

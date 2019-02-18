@@ -1,32 +1,26 @@
 import {ADD_ORDER, DELETE_ORDER, UPDATE_ORDER} from "../constants/ActionTypes"
-import orders from '../prepared_data/orders.json'
+import {filter, map} from 'lodash/collection'
+import prepared_orders from '../prepared_data/orders.json'
 
-export default function orders_reducer(state = [], action) {
+const INITIAL_STATE = localStorage.getItem('app_data') ? JSON.parse(localStorage.getItem('app_data')).orders : prepared_orders
 
+export default function orders_reducer(state = INITIAL_STATE, action) {
     switch (action.type) {
         case ADD_ORDER:
             state = [...state, action.payload]
-            localStorage.setItem('orders', JSON.stringify(state))
             return state
         case UPDATE_ORDER:
-            state = state.map( order => {
+            state = map(state, order => {
                 if (order.id === action.payload.id){
                     order = action.payload
                 }
                 return order
             })
-            localStorage.setItem('orders', JSON.stringify(state))
             return state
         case DELETE_ORDER:
-            state = state.filter(order => order.id !== action.payload.id)
-            localStorage.setItem('orders', JSON.stringify(state))
+            state = filter(state, order => order.id !== action.payload.id)
             return state
         default:
-            state = JSON.parse(localStorage.getItem('orders'))
-            if (!state) {
-                localStorage.setItem('orders', JSON.stringify(orders))
-                state = orders
-            }
             return state
     }
 }

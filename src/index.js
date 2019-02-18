@@ -7,9 +7,37 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers'
 import App from './App.js'
 
+import prepared_users from './prepared_data/users.json'
+import prepared_orders from './prepared_data/orders.json'
+import prepared_dishes from './prepared_data/dishes.json'
+
+let persistedState = {
+    "users":  [],
+    "orders": [],
+    "dishes": []
+}
+
+if(localStorage.getItem('app_data')) {
+    persistedState = JSON.parse(localStorage.getItem('app_data'))
+}else {
+    persistedState = {
+        "users":  prepared_users,
+        "orders": prepared_orders,
+        "dishes": prepared_dishes
+    }
+    localStorage.setItem('app_data', JSON.stringify(persistedState))
+}
+
 const store = createStore(
     rootReducer,
-    applyMiddleware(thunk)
+    persistedState,
+applyMiddleware(thunk)
+)
+
+store.subscribe(
+    ()=>{
+        localStorage.setItem('app_data', JSON.stringify(store.getState()))
+    }
 )
 
 
