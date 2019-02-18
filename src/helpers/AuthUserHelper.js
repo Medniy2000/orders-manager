@@ -1,24 +1,23 @@
-import {getCookie, deleteCookie} from './CookiesHelper.js'
-import {setCookie} from "./CookiesHelper"
+import {getSession, deleteSession, setSession} from './SessionHelper.js'
 
 
 export function authorizedUser(){
-    return getCookie('currentUser')
+    return getSession('currentUser')
 }
 
 export function isAuthenticated(){
-    return getCookie('currentUser') !== ''
+    return getSession('currentUser') !== ''
 }
 
 export function refreshUser(){
     let user =  authorizedUser()
     if (user){
-        setCookie('currentUser', user, {expires: 60 * 15})
+        setSession('currentUser', user, {expires: 60 * 15})
     }
 }
 
 export function logout() {
-    deleteCookie('currentUser')
+    deleteSession('currentUser')
 }
 
 

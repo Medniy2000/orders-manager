@@ -5,7 +5,7 @@ import { SemanticToastContainer } from 'react-semantic-toasts'
 import {find} from 'lodash/collection'
 import Container from "./layout/Container.jsx"
 import Content from "./layout/Content.jsx"
-import {setCookie} from '../helpers/CookiesHelper.js'
+import {setSession} from '../helpers/SessionHelper.js'
 
 
 class Login extends React.Component{
@@ -33,7 +33,7 @@ class Login extends React.Component{
 
     login(){
         if (this.isValid()){
-            setCookie('currentUser', this.state.username, {expires: 60 * 15})
+            setSession('currentUser', this.state.username, {expires: 60 * 15})
             this.props.showNotification(
                 {
                     "type": "success",

@@ -7,7 +7,7 @@ import {find} from 'lodash/collection'
 import Container from "./layout/Container.jsx"
 import Content from "./layout/Content.jsx"
 
-import {setCookie} from "../helpers/CookiesHelper"
+import {setSession} from "../helpers/SessionHelper"
 
 
 class Register extends React.Component{
@@ -46,7 +46,7 @@ class Register extends React.Component{
       if (this.isValid()){
           let user = this.state
           this.props.onCreate(user)
-          setCookie('currentUser', this.state.username, {expires: 60 * 15})
+          setSession('currentUser', this.state.username, {expires: 60 * 15})
           this.props.showNotification(
               {
                   "type": "success",
