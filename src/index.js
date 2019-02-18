@@ -20,11 +20,9 @@ let persistedState = {
 if(localStorage.getItem('app_data')) {
     persistedState = JSON.parse(localStorage.getItem('app_data'))
 }else {
-    persistedState = {
-        "users":  prepared_users,
-        "orders": prepared_orders,
-        "dishes": prepared_dishes
-    }
+    persistedState.users =prepared_users
+    persistedState.orders = prepared_orders
+    persistedState.dishes = prepared_dishes
     localStorage.setItem('app_data', JSON.stringify(persistedState))
 }
 

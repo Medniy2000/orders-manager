@@ -15,14 +15,14 @@ In this project with using a set of components from  [Semantic UI React](https:/
 >* password:Amigo1111
 
 ### Requirements
->* npm version >= 6.4.1
+>* npm version >= 6.8.0
 >*  node version >= 11.0.0
 
 ### Run
 >* git clone https://github.com/Medniy2000/orders-manager.git
 >* cd <path_to>/orders-manager
 >* npm i
->* npm run devserver
->* type in browser http://0.0.0.0:8090
+>* npm run start
+>* type in browser http://localhost:3000/
 
 
